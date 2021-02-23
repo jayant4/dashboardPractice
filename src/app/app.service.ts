@@ -3,19 +3,20 @@ import { Injectable } from '@angular/core';
 import { discardPeriodicTasks } from '@angular/core/testing';
 import { generate } from "short-uuid";
 
-enum DocumentType {
-  FILE,
-  FOLDER
+export enum DocumentType {
+  FILE = "FILE",
+  FOLDER = "FOLDER"
 }
 
 interface Document {
   id: string;
-  type: DocumentType;
+  type: string;
   name: string;
   content: string | null; // if file thhen it will have string content
   documents: Array<Document> | null; // if folder then it will have array of documents
   isEditing: boolean; // null when type is folder
   canBeEdited: boolean;
+  status: string; // new_not_saved, new_saving, saved, changed, changed_saving
   isSelected: boolean;
 }
 
@@ -55,7 +56,7 @@ export class AppService {
 
   constructor() {
     this.appState = {
-      selectedDocument : null,
+      selectedDocument: null,
       dashboards: [],
       uiState: "",
       autoSave: false,
@@ -88,29 +89,46 @@ export class AppService {
     const defaultRootFolder = {
       id: this._guid(),
       name: "Root",
-      type: DocumentType.FOLDER,
+      type: "FOLDER",
       documents: [
         {
           id: "",
           name: "h1",
+          type: "FILE",
           documents: []
         },
         {
           id: "",
           name: "h2",
+          type: 'FOLDER',
           documents: [
             {
               id: "",
               name: "h3",
-              documents: []
+              type: "FOLDER",
+              documents: [
+                {
+                  id: "",
+                  name: "h4",
+                  type: "FILE",
+                  documents: []
+                }
+              ]
             },
             {
               id: "",
-              name: "h4",
+              name: "h5",
+              type: "FILE",
               documents: []
             }
           ]
-        }
+        },
+        {
+          id: "",
+          name: "h6",
+          type: "FILE",
+          documents: []
+        },
       ],
       isEditing: false,
       canBeEdited: false,
@@ -130,7 +148,7 @@ export class AppService {
     };
 
     // add new dashboard to array of dashboards
-    this.appState.dashboards.push(newDashboard);
+    this.appState.dashboards.unshift(newDashboard);
 
     // select the new dashboard
     this.appState.selectedDashboard = newDashboard;
@@ -147,20 +165,22 @@ export class AppService {
 
   public createNewFile() {
 
+
     const newFile: Document = {
       id: generate(),
       content: "",
       name: "",
-      type: DocumentType.FILE,
+      type: 'FILE',
       isEditing: true,
       documents: null,
       canBeEdited: true,
-      isSelected: false
+      isSelected: false,
+      status: "NEW_NOT_SAVED"
     };
-
-    this.appState.selectedDocument?.documents.push(newFile);
+    this.appState.selectedDocument?.documents.unshift(newFile);
   }
 
+  //  not in any use
   public addFileToDashboard(fileName: string): AddFileToDashboardReturnType {
 
     // Validate all the parameters
@@ -170,34 +190,52 @@ export class AppService {
     if (fileName?.trim() === "")
       return { status: "VALIDATION_ERROR", reason: "FileName cannot be blank" };
 
-    if (this.appState.selectedDashboard) {
-      return { status: "DOMAIN_ERROR", reason: "No Dashboard is selected" };
-    }
-
     // it it is null or undefined 
     if (!this.appState.selectedDashboard) {
       return { status: "DOMAIN_ERROR", reason: "No Dashboard is selected" };
     }
 
+
+    let index = this.appState.selectedDocument.document.findIndex((document :any) => document.status === 'NEW_NOT_SAVED');
+    console.log(index);
+    
+
     const newFile: Document = {
       id: generate(),
-      content: "dafadfasdfsafsdaf",
-      name: "file1.txt",
+      content: "",
+      name: fileName,
       type: DocumentType.FILE,
       isEditing: false,
       documents: null,
       canBeEdited: true,
-      isSelected: false
+      isSelected: false,
+      status: "SAVED",
     };
-
-    this.appState.selectedDashboard?.documents.push(newFile);
+    
+    this.appState.selectedDocument?.documents.unshift(newFile);
 
     return { status: "SUCCESS", reason: "" };
 
   }
 
+  //  create folder
+  public createNewFolder() {
 
+    const newFolder: Document = {
+      id: generate(),
+      content: "",
+      name: "",
+      type: 'FOLDER',
+      isEditing: true,
+      documents: [],
+      canBeEdited: true,
+      isSelected: false,
+      status: "NEW_NOT_SAVED"
+    };
 
+    this.appState.selectedDocument?.documents.unshift(newFolder);
+
+  }
 
 
 }

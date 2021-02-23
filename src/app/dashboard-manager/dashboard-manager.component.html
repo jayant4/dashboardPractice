@@ -8,19 +8,21 @@
 
         <!-- Tree Control -->
 
-        <br/>
-        <br/>
+        <br />
+        <br />
 
         <div *ngIf="appService.appState.selectedDashboard">
-            {{appService.appState.selectedDashboard.name}} 
-            <button class="btn btn-sm btn-success" (click)="newFile()">NF</button>
+            <div class="dashboardName d-flex">
+                <p class="flex-grow-1">{{appService.appState.selectedDashboard.name}}</p>
+                <button class="btn btn-sm btn-success" (click)="newFile()"><i class="bi bi-file-earmark-plus"></i> </button>
             &nbsp;
-            <button class="btn btn-sm btn-primary" (click)="newFolder()">NF</button>
+            <button class="btn btn-sm btn-primary" (click)="newFolder()"> <i class="bi bi-folder-plus"></i></button>
+
+            </div>
+            
         </div>
 
-        <app-document-manager  [documents]="appService.appState.selectedDashboard?.documents"></app-document-manager>
-
-
+        <document-manager class="sidebar" [documents]="appService.appState.selectedDashboard?.documents"></document-manager>
     </div>
 
     <div class="col-10">

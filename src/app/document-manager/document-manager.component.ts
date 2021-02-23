@@ -2,13 +2,13 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AppService } from '../app.service';
 
 @Component({
-  selector: 'app-document-manager',
+  selector: 'document-manager',
   templateUrl: './document-manager.component.html',
   styleUrls: ['./document-manager.component.css']
 })
 export class DocumentManagerComponent implements OnInit {
 
-  constructor(public appService : AppService) { 
+  constructor(public appService : AppService,) { 
   }
 
   ngOnInit(): void {

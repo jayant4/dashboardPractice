@@ -1,9 +1,16 @@
-<div *ngFor="let document of documents" class="document-ui">
+<div *ngFor="let document of documents;">
+    <ng-container *ngIf="document.type === 'FILE' ">
+        <file-manager [document]="document"></file-manager>
+    </ng-container>
+    
+    <ng-container *ngIf="document.type === 'FOLDER' ">
+        <div class="root-folder  ml-3" (click)="clickedOnDocument(document)" *ngIf="!document.isEditing"> <i class="bi bi-folder"></i>{{document.name}} </div>
+        <folder-manager  [documents]="document.documents"  ></folder-manager>
+    </ng-container> 
 
-    <div class="document-name" (click)="clickedOnDocument(document)" *ngIf="!document.isEditing">{{document.name}}</div>
-    <input type="text" class="form-control" *ngIf="document.isEditing" [(ngModel)]="document.name"/>
-
-
-    <app-document-manager [documents]="document.documents"></app-document-manager>
-
+    <!-- <div class="document-name" (click)="clickedOnDocument(document)" *ngIf="!document.isEditing">{{document.name}}</div>
+        <input type="text" class="form-control" *ngIf="document.isEditing" [(ngModel)]="document.name" /> -->
+        
+        
+        <!-- <document-manager [documents]="document.documents"></document-manager> -->
 </div>

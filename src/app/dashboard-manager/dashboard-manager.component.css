@@ -1,0 +1,13 @@
+.sidebar{
+    background-color: antiquewhite;
+}
+
+.dashboardName{
+    background-color: aquamarine;
+    padding: 10px;
+    border: 1px solid rgb(105, 105, 105);
+}
+
+.dashboardName p{
+   margin: 5px;
+}

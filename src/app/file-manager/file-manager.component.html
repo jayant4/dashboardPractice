@@ -1,0 +1,2 @@
+<div class="file-manager"  *ngIf="!document.isEditing"><i class="bi bi-file-earmark"></i>{{document.name}}</div>
+<input type="text" (blur)="document.isEditing = false" (keyup)="saveFile($event)" class="form-control" *ngIf="document.isEditing" [(ngModel)]="document.name" />

@@ -32,4 +32,8 @@ export class DashboardManagerComponent implements OnInit {
     this.appService.createNewFile() ;
   }
 
+  public newFolder(){
+      this.appService.createNewFolder();
+  }
+
 }

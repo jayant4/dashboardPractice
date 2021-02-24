@@ -1,4 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { AppService } from '../app.service';
 
@@ -11,7 +12,10 @@ export class FileManagerComponent implements OnInit {
 
 
 
-  public inputFieldRef:any ;
+  public inputFieldRef: any;
+
+  fileName = new FormControl('',Validators.compose([Validators.required]));
+
 
   constructor(public appService: AppService) { }
 
@@ -22,22 +26,33 @@ export class FileManagerComponent implements OnInit {
   public document: any;
 
   saveFile(event: any) {
-   
-    if (event.keyCode === 13 ) { 
+
+    if (event.keyCode === 13) {
       this.document.isEditing = false;
+      this.document.name = this.fileName.value;
+      this.appService.appState.selectedDocument = null;
+
     }
   }
 
+  saveFileBlur(){
+    this.document.isEditing = false;
+    this.document.name = this.fileName.value;
+    this.document.isSelected = false;
+    this.appService.appState.selectedDocument = null;
 
-  @ViewChild('inputField') 
-  set inputField(element : ElementRef<HTMLInputElement>){
-    if(element){
+  }
+
+
+  @ViewChild('inputField')
+  set inputField(element: ElementRef<HTMLInputElement>) {
+    if (element) {
       element.nativeElement.focus();
     }
   }
- 
 
-  
+
+
 
 
   @ViewChild(MatMenuTrigger)
@@ -50,30 +65,29 @@ export class FileManagerComponent implements OnInit {
     this.trigger.openMenu();
     return false;
   }
-  
+
   // to disable the menu on leftclick , just call    this.trigger.closeMenu() from the leftclick function
 
-  public onLeftClick(){
+  public onLeftClick() {
     this.trigger.closeMenu();
+    this.document.isSelected = true;
 
   }
 
 
-  deleteFile(){ // delete file meant to soft delete file from the datamodel
-
+  deleteFile() { // delete file meant to soft delete file from the datamodel
     this.document.isDeleted = true;
-
   }
 
-  renameFile(){
+  renameFile() {
     // console.log(this.inputField.nativeElement);
     // this.inputField.nativeElement.focus();
     this.document.isEditing = true;
     // console.log(this.document.isEditing);
-    
+
   }
 
-
+  
 
 
 

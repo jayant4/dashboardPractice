@@ -48,12 +48,15 @@ export class FolderManagerComponent implements OnInit {
     if (event.keyCode === 13) {
       this.document.name = this.folderName.value;
       this.document.isEditing = false;
+      this.appService.appState.selectedDocument = null;
     }
   }
 
   saveFolderOnBlur(){
     this.document.isEditing = false;
     this.document.name = this.folderName.value;
+    this.appService.appState.selectedDocument = null;
+
   }
 
 

@@ -29,11 +29,21 @@ export class DashboardManagerComponent implements OnInit {
 
 
   public newFile() {
-    this.appService.createNewFile() ;
+    if(this.appService.appState.selectedDocument === null){
+      alert("please select a folder first")
+    }else{
+      this.appService.createNewFile() ;
+    }
   }
 
   public newFolder(){
+    if(this.appService.appState.selectedDocument === null){
+      alert("please select a folder first")
+    }else{
       this.appService.createNewFolder();
+      
+    }
+      
   }
 
 }

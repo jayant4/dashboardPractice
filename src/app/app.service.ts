@@ -18,6 +18,7 @@ interface Document {
   canBeEdited: boolean;
   status: string; // new_not_saved, new_saving, saved, changed, changed_saving
   isSelected: boolean;
+  isDeleted: boolean;
 }
 
 
@@ -96,7 +97,9 @@ export class AppService {
           name: "h1",
           type: "FILE",
           documents: [],
-          isSelected: false
+          isSelected: false,
+          isDeleted: false,
+          isEditing:false
 
         },
         {
@@ -114,11 +117,14 @@ export class AppService {
                   name: "h4",
                   type: "FILE",
                   documents: [],
-                  isSelected: false
+                  isSelected: false,
+                  isDeleted: false
+
 
                 }
               ],
-              isSelected: false
+              isSelected: false,
+              isDeleted: false
 
             },
             {
@@ -126,24 +132,29 @@ export class AppService {
               name: "h5",
               type: "FILE",
               documents: [],
-              isSelected: false
+              isSelected: false,
+              isDeleted: false
+
 
             }
-          ]
+          ],
+          isDeleted :false
         },
         {
           id: "",
           name: "h6",
           type: "FILE",
           documents: [],
-        isSelected: false
-          
+          isSelected: false,
+          isDeleted: false
+
         },
       ],
       isEditing: false,
       canBeEdited: false,
       content: null,
-      isSelected: false
+      isSelected: false,
+      isDeleted: false
     };
 
     // create new dashboard
@@ -181,11 +192,12 @@ export class AppService {
       content: "",
       name: "",
       type: 'FILE',
-      isEditing: true, 
+      isEditing: true,
       documents: null,
       canBeEdited: true,
       isSelected: false,
-      status: "NEW_NOT_SAVED"
+      status: "NEW_NOT_SAVED",
+      isDeleted: false
     };
     this.appState.selectedDocument?.documents.unshift(newFile);
   }
@@ -206,9 +218,9 @@ export class AppService {
     }
 
 
-    let index = this.appState.selectedDocument.document.findIndex((document :any) => document.status === 'NEW_NOT_SAVED');
+    let index = this.appState.selectedDocument.document.findIndex((document: any) => document.status === 'NEW_NOT_SAVED');
     console.log(index);
-    
+
 
     const newFile: Document = {
       id: generate(),
@@ -220,8 +232,9 @@ export class AppService {
       canBeEdited: true,
       isSelected: false,
       status: "SAVED",
+      isDeleted: false
     };
-    
+
     this.appState.selectedDocument?.documents.unshift(newFile);
 
     return { status: "SUCCESS", reason: "" };
@@ -240,7 +253,9 @@ export class AppService {
       documents: [],
       canBeEdited: true,
       isSelected: false,
-      status: "NEW_NOT_SAVED"
+      status: "NEW_NOT_SAVED",
+      isDeleted: false
+
     };
 
     this.appState.selectedDocument?.documents.unshift(newFolder);

@@ -45,6 +45,24 @@ export class FileManagerComponent implements OnInit {
   }
 
 
+  deleteFile(){ // delete file meant to soft delete file from the datamodel
+
+    this.document.isDeleted = true;
+
+  }
+
+  renameFile(){
+
+    this.document.isEditing = true;
+    console.log(this.document.isEditing);
+    
+
+
+  }
+
+
+
+
 
 
 }

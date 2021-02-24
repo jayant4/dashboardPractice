@@ -14,7 +14,7 @@ export class FolderManagerComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  
+
   @ViewChild(MatMenuTrigger)
   trigger!: MatMenuTrigger;
 
@@ -24,31 +24,38 @@ export class FolderManagerComponent implements OnInit {
   public document: any;
 
   public clickedOnDocument() {
-    this.appService.appState.selectedDocument =   this.document;
-    this.document.isSelected = true; 
+    this.appService.appState.selectedDocument = this.document;
+    this.document.isSelected = true;
 
-    console.log (this.document);
+    console.log(this.document);
 
     this.trigger.closeMenu();
 
   }
 
   public saveFolder(event: any) {
-    if (event.keyCode === 13) { 
+    if (event.keyCode === 13) {
       this.document.isEditing = false;
     }
   }
 
 
-  public folderDeSelected(){
-    this.document.isSelected = false; 
+  public folderDeSelected() {
+    this.document.isSelected = false;
 
   }
-
 
   public onRightClick() {
     this.trigger.openMenu();
     return false;
+  }
+
+  public deleteFolder() {
+    this.document.isDeleted = true;
+
+  }
+  public renameFolder() {
+    this.document.isEditing = true;
   }
 
 }

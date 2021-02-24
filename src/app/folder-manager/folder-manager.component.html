@@ -1,15 +1,16 @@
-<div class="d-flex folder-manager">
-    <div  [matMenuTriggerFor]="menu" (contextmenu)='onRightClick()' tabindex="1" class=" flex-grow-1" *ngIf="!document.isEditing" (blur)="document.isSelected = false" (click)="clickedOnDocument()"
+
+    <div  [matMenuTriggerFor]="menu" (contextmenu)='onRightClick()' tabindex="1" class=" flex-grow-1 folder-manager" *ngIf="(!document.isEditing) && document.isDeleted === false" (blur)="document.isSelected = false" (click)="clickedOnDocument()"
     [ngClass]="{'isSelected': document.isSelected === true}" ><i class="bi bi-folder"></i>{{document.name}}</div>
 
-    <i class="bi bi-three-dots-vertical " [matMenuTriggerFor]="menu"></i>
-</div>
+
 <input type="text" (blur)="document.isEditing = false" (keyup)="saveFolder($event)" class="form-control"
     *ngIf="document.isEditing" [(ngModel)]="document.name" />
 
 <document-manager [documents]="document.documents"></document-manager>
 
+
+<!-- menu items -->
 <mat-menu #menu="matMenu" yPosition="above">
-    <button mat-menu-item >Delete</button>
-    <button mat-menu-item>Rename</button>
+    <button mat-menu-item (click)="deleteFolder()">Delete</button>
+    <button mat-menu-item (click)="renameFolder()">Rename</button>
   </mat-menu>

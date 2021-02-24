@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardManagerComponent } from './dashboard-manager/dashboard-manager.component';
@@ -9,6 +9,9 @@ import { DocumentManagerComponent } from './document-manager/document-manager.co
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FileManagerComponent } from './file-manager/file-manager.component';
 import { FolderManagerComponent } from './folder-manager/folder-manager.component';
+import { CdkTreeModule } from '@angular/cdk/tree';
+
+
 
 @NgModule({
   declarations: [
@@ -16,14 +19,18 @@ import { FolderManagerComponent } from './folder-manager/folder-manager.componen
     DashboardManagerComponent,
     DocumentManagerComponent,
     FileManagerComponent,
-    FolderManagerComponent
+    FolderManagerComponent,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     BrowserAnimationsModule,
-    MatMenuModule
+    MatMenuModule,
+    CdkTreeModule,
+   
+
   ],
   providers: [],
   bootstrap: [AppComponent]

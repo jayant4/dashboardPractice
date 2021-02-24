@@ -19,6 +19,8 @@ interface Document {
   status: string; // new_not_saved, new_saving, saved, changed, changed_saving
   isSelected: boolean;
   isDeleted: boolean;
+  // canHaveChildren : boolean;
+  isExpanded: boolean; // by default expanded is false i.e folder is closed
 }
 
 
@@ -99,7 +101,8 @@ export class AppService {
           documents: [],
           isSelected: false,
           isDeleted: false,
-          isEditing:false
+          isEditing: false,
+          isExpanded: false
 
         },
         {
@@ -118,13 +121,16 @@ export class AppService {
                   type: "FILE",
                   documents: [],
                   isSelected: false,
-                  isDeleted: false
+                  isDeleted: false,
+                  isExpanded: false
+
 
 
                 }
               ],
               isSelected: false,
-              isDeleted: false
+              isDeleted: false,
+              isExpanded: false
 
             },
             {
@@ -133,12 +139,16 @@ export class AppService {
               type: "FILE",
               documents: [],
               isSelected: false,
-              isDeleted: false
+              isDeleted: false,
+              isExpanded: false,
+
 
 
             }
           ],
-          isDeleted :false
+          isDeleted: false,
+          isExpanded: false
+
         },
         {
           id: "",
@@ -146,7 +156,9 @@ export class AppService {
           type: "FILE",
           documents: [],
           isSelected: false,
-          isDeleted: false
+          isDeleted: false,
+          isExpanded: false
+
 
         },
       ],
@@ -154,7 +166,9 @@ export class AppService {
       canBeEdited: false,
       content: null,
       isSelected: false,
-      isDeleted: false
+      isDeleted: false,
+      isExpanded: false
+
     };
 
     // create new dashboard
@@ -197,7 +211,8 @@ export class AppService {
       canBeEdited: true,
       isSelected: false,
       status: "NEW_NOT_SAVED",
-      isDeleted: false
+      isDeleted: false,
+      isExpanded: false,
     };
     this.appState.selectedDocument?.documents.unshift(newFile);
   }
@@ -232,7 +247,8 @@ export class AppService {
       canBeEdited: true,
       isSelected: false,
       status: "SAVED",
-      isDeleted: false
+      isDeleted: false,
+      isExpanded: false
     };
 
     this.appState.selectedDocument?.documents.unshift(newFile);
@@ -254,7 +270,8 @@ export class AppService {
       canBeEdited: true,
       isSelected: false,
       status: "NEW_NOT_SAVED",
-      isDeleted: false
+      isDeleted: false,
+      isExpanded: false,
 
     };
 

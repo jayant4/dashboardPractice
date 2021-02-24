@@ -2,10 +2,6 @@
 
     <file-manager *ngIf="document.type === 'FILE'  && document.isDeleted === false"  [document]="document"></file-manager>
 
-
-
-
     <folder-manager *ngIf="document.type === 'FOLDER' && document.isDeleted === false"  [document]="document"></folder-manager>
-
 
 </div>

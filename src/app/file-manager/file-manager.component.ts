@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { AppService } from '../app.service';
 
@@ -9,6 +9,10 @@ import { AppService } from '../app.service';
 })
 export class FileManagerComponent implements OnInit {
 
+
+
+  public inputFieldRef:any ;
+
   constructor(public appService: AppService) { }
 
   ngOnInit(): void {
@@ -18,12 +22,22 @@ export class FileManagerComponent implements OnInit {
   public document: any;
 
   saveFile(event: any) {
-    console.log(event);
-
-    if (event.keyCode === 13) {
+   
+    if (event.keyCode === 13 ) { 
       this.document.isEditing = false;
     }
   }
+
+
+  @ViewChild('inputField') 
+  set inputField(element : ElementRef<HTMLInputElement>){
+    if(element){
+      element.nativeElement.focus();
+    }
+  }
+ 
+
+  
 
 
   @ViewChild(MatMenuTrigger)
@@ -52,12 +66,11 @@ export class FileManagerComponent implements OnInit {
   }
 
   renameFile(){
-
+    // console.log(this.inputField.nativeElement);
+    // this.inputField.nativeElement.focus();
     this.document.isEditing = true;
-    console.log(this.document.isEditing);
+    // console.log(this.document.isEditing);
     
-
-
   }
 
 

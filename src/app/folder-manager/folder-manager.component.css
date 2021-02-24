@@ -9,6 +9,8 @@
 }
 
 .folder-manager{
-    border : 1px solid grey;
+    border : 0.5px  grey;
     padding : 5px;
+    font-size : 13pt;
+    
 }

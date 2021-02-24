@@ -1,17 +1,15 @@
-<div [matMenuTriggerFor]="menu"  class="file-manager ml-3 flex-gr" *ngIf="(!document.isEditing) && document.isDeleted === false"
-    (contextmenu)='onRightClick()'
-    (click)="onLeftClick()"
-    >
+<div [matMenuTriggerFor]="menu" class="file-manager ml-3 flex-gr"
+    *ngIf="(!document.isEditing) && document.isDeleted === false" (contextmenu)='onRightClick()'
+    (click)="onLeftClick()">
     <i class="bi bi-file-earmark"></i> {{document.name}}
-    
+
 </div>
-    <input type="text" (blur)="document.isEditing = false" (keyup)="saveFile($event)" class="form-control"
-    *ngIf="document.isEditing === true" [(ngModel)]="document.name" />
-    
+<input #inputField type="text" (blur)="document.isEditing = false" (keyup)="saveFile($event)" class="form-control"
+    *ngIf="document.isEditing === true " [(ngModel)]="document.name" />
+
 
 <!-- menu items -->
 <mat-menu #menu="matMenu" yPosition="above">
     <button mat-menu-item (click)="deleteFile()">Delete</button>
     <button mat-menu-item (click)="renameFile()">Rename</button>
 </mat-menu>
-

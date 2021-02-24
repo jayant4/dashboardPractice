@@ -1,12 +1,19 @@
 
-    <div  [matMenuTriggerFor]="menu" (contextmenu)='onRightClick()' tabindex="1" class=" flex-grow-1 folder-manager" *ngIf="(!document.isEditing) && document.isDeleted === false" (blur)="document.isSelected = false" (click)="clickedOnDocument()"
-    [ngClass]="{'isSelected': document.isSelected === true}" ><i class="bi bi-folder"></i>{{document.name}}</div>
+<div class="d-flex folder-manager">
 
-
-<input type="text" (blur)="document.isEditing = false" (keyup)="saveFolder($event)" class="form-control"
+    <div  [matMenuTriggerFor]="menu" (contextmenu)='onRightClick()' tabindex="1" class="flex-grow-1 " *ngIf="(!document.isEditing) && document.isDeleted === false" (blur)="document.isSelected = false" (click)="clickedOnDocument()"
+    [ngClass]="{'isSelected': document.isSelected === true}" > <i  class=" bi bi-folder " ></i> {{document.name}} </div>
+    
+    
+    <input type="text" #inputField (blur)="document.isEditing = false" (keyup)="saveFolder($event)" class="form-control"
     *ngIf="document.isEditing" [(ngModel)]="document.name" />
 
-<document-manager [documents]="document.documents"></document-manager>
+    <i *ngIf="document.isExpanded === true" class="bi bi-chevron-right" (click)="toggleFolderVisibility()" ></i>
+
+    <i *ngIf="document.isExpanded === false" class="bi bi-chevron-down" (click)="toggleFolderVisibility()" ></i>
+</div>
+
+<document-manager *ngIf="document.isExpanded === false" [documents]="document.documents"></document-manager>
 
 
 <!-- menu items -->

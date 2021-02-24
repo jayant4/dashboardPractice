@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { AppService } from '../app.service';
 import { MatMenuTrigger } from '@angular/material/menu';
 
@@ -17,6 +17,14 @@ export class FolderManagerComponent implements OnInit {
 
   @ViewChild(MatMenuTrigger)
   trigger!: MatMenuTrigger;
+
+
+  @ViewChild('inputField') 
+  set inputField(element : ElementRef<HTMLInputElement>){
+    if(element){
+      element.nativeElement.focus();
+    }
+  }
 
 
 
@@ -56,6 +64,14 @@ export class FolderManagerComponent implements OnInit {
   }
   public renameFolder() {
     this.document.isEditing = true;
+  }
+
+  public toggleFolderVisibility(){
+    if(this.document.isExpanded === true){
+      this.document.isExpanded = false;
+    } else{
+      this.document.isExpanded = true;
+    }
   }
 
 }

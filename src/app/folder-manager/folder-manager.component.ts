@@ -16,10 +16,10 @@ export class FolderManagerComponent implements OnInit {
 
 
   @Input()
-  public documents: any;
+  public document: any;
 
-  public clickedOnDocument(document: any) {
-    this.appService.appState.selectedDocument = document;
+  public clickedOnDocument() {
+    this.appService.appState.selectedDocument =   this.document;
   }
 
   public saveFolder(event: any) {

@@ -1,6 +1,6 @@
 <div class="row">
 
-    <div class="col-2">
+    <div class="col-3 sidebar">
 
         <input type="text" [(ngModel)]="newDashboardName" class="form-control" placeholder="Enter Dashboard Name" />
 
@@ -22,10 +22,10 @@
             
         </div>
 
-        <document-manager class="sidebar" [documents]="appService.appState.selectedDashboard?.documents"></document-manager>
+        <document-manager class="" [documents]="appService.appState.selectedDashboard?.documents"></document-manager>
     </div>
 
-    <div class="col-10">
+    <div class="col-9">
 
 
     </div>

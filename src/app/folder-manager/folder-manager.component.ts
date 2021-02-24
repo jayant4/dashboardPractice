@@ -1,6 +1,7 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { AppService } from '../app.service';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'folder-manager',
@@ -13,6 +14,8 @@ export class FolderManagerComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  folderName = new FormControl('',Validators.compose([Validators.required]));
 
 
   @ViewChild(MatMenuTrigger)
@@ -43,8 +46,14 @@ export class FolderManagerComponent implements OnInit {
 
   public saveFolder(event: any) {
     if (event.keyCode === 13) {
+      this.document.name = this.folderName.value;
       this.document.isEditing = false;
     }
+  }
+
+  saveFolderOnBlur(){
+    this.document.isEditing = false;
+    this.document.name = this.folderName.value;
   }
 
 
@@ -75,3 +84,5 @@ export class FolderManagerComponent implements OnInit {
   }
 
 }
+
+

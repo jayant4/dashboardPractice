@@ -4,9 +4,12 @@
     <div  [matMenuTriggerFor]="menu" (contextmenu)='onRightClick()' tabindex="1" class="flex-grow-1 " *ngIf="(!document.isEditing) && document.isDeleted === false" (blur)="document.isSelected = false" (click)="clickedOnDocument()"
     [ngClass]="{'isSelected': document.isSelected === true}" > <i  class=" bi bi-folder " ></i> {{document.name}} </div>
     
-    
-    <input type="text" #inputField (blur)="document.isEditing = false" (keyup)="saveFolder($event)" class="form-control"
-    *ngIf="document.isEditing" [(ngModel)]="document.name" />
+    <!-- copy -->
+    <!-- <input type="text" #inputField (blur)="document.isEditing = false" (keyup)="saveFolder($event)" class="form-control"
+    *ngIf="document.isEditing" [(ngModel)]="document.name" placeholder="no empty validation" /> -->
+    <!-- copy -->
+    <input type="text" #inputField (blur)="saveFolderOnBlur()" (keyup)="saveFolder($event)" class="form-control"
+    *ngIf="document.isEditing"  placeholder="with empty validation" [formControl]="folderName" />
 
     <i *ngIf="document.isExpanded === true" class="bi bi-chevron-right" (click)="toggleFolderVisibility()" ></i>
 

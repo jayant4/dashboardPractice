@@ -4,13 +4,12 @@ import { MatMenuModule } from '@angular/material/menu';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardManagerComponent } from './dashboard-manager/dashboard-manager.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DocumentManagerComponent } from './document-manager/document-manager.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FileManagerComponent } from './file-manager/file-manager.component';
 import { FolderManagerComponent } from './folder-manager/folder-manager.component';
 import { CdkTreeModule } from '@angular/cdk/tree';
-
 
 
 @NgModule({
@@ -29,6 +28,7 @@ import { CdkTreeModule } from '@angular/cdk/tree';
     BrowserAnimationsModule,
     MatMenuModule,
     CdkTreeModule,
+    ReactiveFormsModule
    
 
   ],

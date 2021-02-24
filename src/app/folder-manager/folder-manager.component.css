@@ -1,4 +1,14 @@
 .isSelected {
-    background-color: antiquewhite;
+    background-color: thistle;
     padding: 5px;
+    
+}
+
+.file-manager{
+    font-size: 13pt;
+}
+
+.folder-manager{
+    border : 1px solid grey;
+    padding : 5px;
 }

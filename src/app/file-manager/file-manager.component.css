@@ -1,3 +1,6 @@
-/* .file-manager{
-    padding-top: 3px;
-} */
+.file-manager{
+    font-size : 13pt;
+    border : 1px solid grey;
+    padding : 5px;
+}
+

@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { AppService } from '../app.service';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
   selector: 'folder-manager',
@@ -13,6 +14,10 @@ export class FolderManagerComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  
+  @ViewChild(MatMenuTrigger)
+  trigger!: MatMenuTrigger;
+
 
 
   @Input()
@@ -23,6 +28,8 @@ export class FolderManagerComponent implements OnInit {
     this.document.isSelected = true; 
 
     console.log (this.document);
+
+    this.trigger.closeMenu();
 
   }
 
@@ -36,6 +43,12 @@ export class FolderManagerComponent implements OnInit {
   public folderDeSelected(){
     this.document.isSelected = false; 
 
+  }
+
+
+  public onRightClick() {
+    this.trigger.openMenu();
+    return false;
   }
 
 }

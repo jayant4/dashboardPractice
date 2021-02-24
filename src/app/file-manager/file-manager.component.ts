@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { MatMenuTrigger } from '@angular/material/menu';
 import { AppService } from '../app.service';
 
 @Component({
@@ -8,19 +9,42 @@ import { AppService } from '../app.service';
 })
 export class FileManagerComponent implements OnInit {
 
-  constructor(public appService : AppService) { }
+  constructor(public appService: AppService) { }
 
   ngOnInit(): void {
   }
 
   @Input()
-  public document : any; 
-  saveFile(event:any){
+  public document: any;
+
+  saveFile(event: any) {
     console.log(event);
-    
-    if(event.keyCode === 13){
+
+    if (event.keyCode === 13) {
       this.document.isEditing = false;
     }
   }
+
+
+  @ViewChild(MatMenuTrigger)
+  trigger!: MatMenuTrigger;
+
+  // @ViewChild('rightMenuTrigger')
+  // trigger! : MatMenuTrigger;
+
+  public onRightClick() {
+    this.trigger.openMenu();
+    return false;
+  }
+  
+  // to disable the menu on leftclick , just call    this.trigger.closeMenu() from the leftclick function
+
+  public onLeftClick(){
+    this.trigger.closeMenu();
+
+  }
+
+
+
 
 }

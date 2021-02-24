@@ -1,2 +1,12 @@
-<div class="file-manager"  *ngIf="!document.isEditing"><i class="bi bi-file-earmark"></i>{{document.name}}</div>
-<input type="text" (blur)="document.isEditing = false" (keyup)="saveFile($event)" class="form-control" *ngIf="document.isEditing" [(ngModel)]="document.name" />
+<div [matMenuTriggerFor]="menu"  class="file-manager ml-3 flex-gr" *ngIf="!document.isEditing"
+    (contextmenu)='onRightClick()'
+    (click)="onLeftClick()"
+    >
+    <i class="bi bi-file-earmark"></i> {{document.name}}
+    <input type="text" (blur)="document.isEditing = false" (keyup)="saveFile($event)" class="form-control"
+        *ngIf="document.isEditing" [(ngModel)]="document.name" />
+</div>
+<mat-menu #menu="matMenu" yPosition="above">
+    <button mat-menu-item>Delete</button>
+    <button mat-menu-item>Rename</button>
+</mat-menu>

@@ -1,4 +1,6 @@
-<div class="file-manager"  *ngIf="!document.isEditing" (click)="clickedOnDocument()" ><i class="bi bi-folder"></i>{{document.name}}</div>
-<input type="text" (blur)="document.isEditing = false" (keyup)="saveFile($event)" class="form-control" *ngIf="document.isEditing" [(ngModel)]="document.name" />
+<div  tabindex="1" class="file-manager " *ngIf="!document.isEditing" (blur)="document.isSelected = false" (click)="clickedOnDocument()"
+    [ngClass]="{'isSelected': document.isSelected === true}"><i class="bi bi-folder"></i>{{document.name}}</div>
+<input type="text" (blur)="document.isEditing = false" (keyup)="saveFolder($event)" class="form-control"
+    *ngIf="document.isEditing" [(ngModel)]="document.name" />
 
 <document-manager [documents]="document.documents"></document-manager>

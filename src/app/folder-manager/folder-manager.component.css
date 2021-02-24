@@ -1,3 +1,4 @@
-/* .folder-manager {
-    padding-top: 3px;
-} */
+.isSelected {
+    background-color: antiquewhite;
+    padding: 5px;
+}

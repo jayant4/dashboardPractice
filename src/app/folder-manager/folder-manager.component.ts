@@ -20,14 +20,22 @@ export class FolderManagerComponent implements OnInit {
 
   public clickedOnDocument() {
     this.appService.appState.selectedDocument =   this.document;
+    this.document.isSelected = true; 
+
+    console.log (this.document);
+
   }
 
   public saveFolder(event: any) {
-    if (event.keyCode === 13) {
-      // this.document.isEditing = false;
+    if (event.keyCode === 13) { 
+      this.document.isEditing = false;
     }
   }
 
 
+  public folderDeSelected(){
+    this.document.isSelected = false; 
+
+  }
 
 }

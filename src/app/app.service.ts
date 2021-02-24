@@ -95,7 +95,9 @@ export class AppService {
           id: "",
           name: "h1",
           type: "FILE",
-          documents: []
+          documents: [],
+          isSelected: false
+
         },
         {
           id: "",
@@ -111,15 +113,21 @@ export class AppService {
                   id: "",
                   name: "h4",
                   type: "FILE",
-                  documents: []
+                  documents: [],
+                  isSelected: false
+
                 }
-              ]
+              ],
+              isSelected: false
+
             },
             {
               id: "",
               name: "h5",
               type: "FILE",
-              documents: []
+              documents: [],
+              isSelected: false
+
             }
           ]
         },
@@ -127,7 +135,9 @@ export class AppService {
           id: "",
           name: "h6",
           type: "FILE",
-          documents: []
+          documents: [],
+        isSelected: false
+          
         },
       ],
       isEditing: false,
@@ -171,7 +181,7 @@ export class AppService {
       content: "",
       name: "",
       type: 'FILE',
-      isEditing: true,
+      isEditing: true, 
       documents: null,
       canBeEdited: true,
       isSelected: false,

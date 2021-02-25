@@ -10,59 +10,61 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class FolderManagerComponent implements OnInit {
 
-  constructor(public appService: AppService) { }
+  constructor(public appService: AppService) {
 
-  ngOnInit(): void {
   }
 
-  folderName = new FormControl('',Validators.compose([Validators.required]));
+  ngOnInit(): void {
+
+  }
+
+
+  folderName = new FormControl('', Validators.compose([Validators.required]));
 
 
   @ViewChild(MatMenuTrigger)
   trigger!: MatMenuTrigger;
 
 
-  @ViewChild('inputField') 
-  set inputField(element : ElementRef<HTMLInputElement>){
-    if(element){
+  // To bring focus in the textbox
+  @ViewChild('inputField')
+  set inputField(element: ElementRef<HTMLInputElement>) {
+    if (element) {
       element.nativeElement.focus();
     }
   }
-
-
 
   @Input()
   public document: any;
 
   public clickedOnDocument() {
-    this.appService.appState.selectedDocument = this.document;
-    this.document.isSelected = true;
-
-    console.log(this.document);
-
+    this.appService.deselectCurrentlySelected();
+    this.appService.selectNew(this.document);
     this.trigger.closeMenu();
-
   }
 
-  public saveFolder(event: any) {
-    if (event.keyCode === 13) {
-      this.document.name = this.folderName.value;
-      this.document.isEditing = false;
-      this.appService.appState.selectedDocument = null;
+
+  // Ths is required to handle Enter Key and Save the folder
+  public saveFolderOnKeyUp(event: any) {
+
+    if (event.keyCode === 13 || event.keyCode === 27) {
+      if (this.folderName.value.trim() === "") {
+        this.appService.deleteEmptyDocument(this.document);
+      }else{
+        this.appService.saveDocument(this.document, this.folderName.value);
+      }
     }
-  }
-
-  saveFolderOnBlur(){
-    this.document.isEditing = false;
-    this.document.name = this.folderName.value;
-    this.appService.appState.selectedDocument = null;
 
   }
 
+  // Ths is required to save the folder when user hits tab to loose the focus or user clicks oustise to loose the focus
+  saveFolderOnBlur() {
+    if (this.folderName.value.trim() === "") { // filename empty do not allow to save file || this.folderName.value.length < 3
+      this.appService.deleteEmptyDocument(this.document)
 
-  public folderDeSelected() {
-    this.document.isSelected = false;
-
+    } else {
+      this.appService.saveDocument(this.document, this.folderName.value);
+    }
   }
 
   public onRightClick() {
@@ -72,20 +74,18 @@ export class FolderManagerComponent implements OnInit {
 
   public deleteFolder() {
     this.document.isDeleted = true;
-
   }
+
   public renameFolder() {
     this.document.isEditing = true;
   }
 
-  public toggleFolderVisibility(){
-    if(this.document.isExpanded === true){
+  public toggleFolderVisibility() {
+    if (this.document.isExpanded === true) {
       this.document.isExpanded = false;
-    } else{
+    } else {
       this.document.isExpanded = true;
     }
   }
 
 }
-
-

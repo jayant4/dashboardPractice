@@ -2,3 +2,71 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+/* dashboard component */
+
+.sidebar{
+    background-color: #f6f5f5;
+    height : 100vh;
+    overflow-x: scroll;
+}
+
+.dashboardName{
+    background-color: #ece2e1 ;
+    padding: 6px;
+    border-radius: 5px;
+    font-size : 11pt;
+    
+}
+
+.dashboardName p{
+   margin: 5px;
+   font-weight: 500;
+}
+
+
+/* document component  */
+
+.root-folder{
+    background-color: #f6f5f5;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    font-size : 10pt;
+}
+
+
+/*   file component */
+
+.file-manager{
+    font-size : 10pt;
+    border : 1px  grey;
+    padding : 5px;
+}
+
+.isSelected {
+    padding: 5px;
+    border: 1px solid #654062 !important;
+
+}
+
+
+/* folder component */
+
+.folder-manager{
+    border : 0.5px  grey;
+    padding : 5px;
+    font-size : 10pt;
+    
+}
+
+.my-form-control{
+    font-size : 10pt;
+    height: 20px !important;
+    border: none !important;
+}
+
+.document-ui {
+    margin-left: 20px;
+    cursor: pointer;
+  }

@@ -10,12 +10,12 @@ import { AppService } from '../app.service';
 })
 export class FileManagerComponent implements OnInit {
 
-
-
   public inputFieldRef: any;
 
-  fileName = new FormControl('',Validators.compose([Validators.required]));
+  fileName = new FormControl('', Validators.compose([Validators.required]));
 
+  @ViewChild(MatMenuTrigger)
+  trigger!: MatMenuTrigger;
 
   constructor(public appService: AppService) { }
 
@@ -25,24 +25,29 @@ export class FileManagerComponent implements OnInit {
   @Input()
   public document: any;
 
-  saveFile(event: any) {
 
-    if (event.keyCode === 13) {
-      this.document.isEditing = false;
-      this.document.name = this.fileName.value;
-      this.appService.appState.selectedDocument = null;
+  saveFileOnKeyUp(event: any) {
+
+    if (event.keyCode === 13 || event.keyCode === 27) {
+      if (this.fileName.value.trim() === "") { // filename empty do not allow to save file
+        this.appService.deleteEmptyDocument(this.document)
+      } else {
+
+        this.appService.saveDocument(this.document, this.fileName.value);
+
+      }
 
     }
   }
 
-  saveFileBlur(){
-    this.document.isEditing = false;
-    this.document.name = this.fileName.value;
-    this.document.isSelected = false;
-    this.appService.appState.selectedDocument = null;
+  saveFileBlur() {
+    if (this.fileName.value.trim() === "") { // filename empty do not allow to save file || this.fileName.value.length < 3
+      this.appService.deleteEmptyDocument(this.document)
 
+    } else {
+      this.appService.saveDocument(this.document, this.fileName.value);
+    }
   }
-
 
   @ViewChild('inputField')
   set inputField(element: ElementRef<HTMLInputElement>) {
@@ -51,45 +56,23 @@ export class FileManagerComponent implements OnInit {
     }
   }
 
-
-
-
-
-  @ViewChild(MatMenuTrigger)
-  trigger!: MatMenuTrigger;
-
-  // @ViewChild('rightMenuTrigger')
-  // trigger! : MatMenuTrigger;
-
   public onRightClick() {
     this.trigger.openMenu();
     return false;
   }
 
   // to disable the menu on leftclick , just call    this.trigger.closeMenu() from the leftclick function
-
   public onLeftClick() {
     this.trigger.closeMenu();
     this.document.isSelected = true;
 
   }
 
-
   deleteFile() { // delete file meant to soft delete file from the datamodel
     this.document.isDeleted = true;
   }
 
   renameFile() {
-    // console.log(this.inputField.nativeElement);
-    // this.inputField.nativeElement.focus();
     this.document.isEditing = true;
-    // console.log(this.document.isEditing);
-
   }
-
-  
-
-
-
-
 }

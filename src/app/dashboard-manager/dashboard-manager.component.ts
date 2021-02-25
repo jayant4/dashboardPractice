@@ -19,9 +19,9 @@ export class DashboardManagerComponent implements OnInit {
     const result = this.appService.createNewDashboard(this.newDashboardName);
 
     if (result.status === "VALIDATION_ERROR") {
-      alert ( result.reason  ) ;
+      alert(result.reason);
     } else if (result.status === "DOMAIN_ERROR") {
-      alert ( result.reason  ) ;
+      alert(result.reason);
     } else if (result.status === "SUCCCESS") {
       // TODO: 
     }
@@ -29,21 +29,14 @@ export class DashboardManagerComponent implements OnInit {
 
 
   public newFile() {
-    if(this.appService.appState.selectedDocument === null){
-      alert("please select a folder first")
-    }else{
-      this.appService.createNewFile() ;
-    }
+
+    this.appService.createNewFile();
   }
 
-  public newFolder(){
-    if(this.appService.appState.selectedDocument === null){
-      alert("please select a folder first")
-    }else{
-      this.appService.createNewFolder();
-      
-    }
-      
+  public newFolder() {
+
+    this.appService.createNewFolder();
+
   }
 
 }

@@ -9,7 +9,9 @@ import { DocumentManagerComponent } from './document-manager/document-manager.co
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FileManagerComponent } from './file-manager/file-manager.component';
 import { FolderManagerComponent } from './folder-manager/folder-manager.component';
-import { CdkTreeModule } from '@angular/cdk/tree';
+
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatButtonModule} from '@angular/material/button';
 
 
 @NgModule({
@@ -25,10 +27,11 @@ import { CdkTreeModule } from '@angular/cdk/tree';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     MatMenuModule,
-    CdkTreeModule,
-    ReactiveFormsModule
+    MatSnackBarModule,
+    MatButtonModule
    
 
   ],

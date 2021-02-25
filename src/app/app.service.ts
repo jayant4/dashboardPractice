@@ -1,6 +1,7 @@
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { discardPeriodicTasks } from '@angular/core/testing';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { generate } from "short-uuid";
 
 export enum DocumentType {
@@ -17,10 +18,10 @@ interface Document {
   isEditing: boolean; // null when type is folder
   canBeEdited: boolean;
   status: string; // new_not_saved, new_saving, saved, changed, changed_saving
-  isSelected: boolean;
   isDeleted: boolean;
   // canHaveChildren : boolean;
   isExpanded: boolean; // by default expanded is false i.e folder is closed
+  isSelected: boolean;
 }
 
 
@@ -57,7 +58,7 @@ export class AppService {
   public appState: any;
 
 
-  constructor() {
+  constructor(private _snackBar: MatSnackBar) {
     this.appState = {
       selectedDocument: null,
       dashboards: [],
@@ -93,13 +94,25 @@ export class AppService {
       id: this._guid(),
       name: "Root",
       type: "FOLDER",
+      documents: [],
+      isDeleted: false,
+      isEditing: false,
+      isExpanded: false
+    }
+
+    // console.log(JSON.stringify(defaultRootFolder));
+
+
+    const defaultRootFolder1 = {
+      id: this._guid(),
+      name: "Root",
+      type: "FOLDER",
       documents: [
         {
           id: "",
           name: "h1",
           type: "FILE",
           documents: [],
-          isSelected: false,
           isDeleted: false,
           isEditing: false,
           isExpanded: false
@@ -120,30 +133,20 @@ export class AppService {
                   name: "h4",
                   type: "FILE",
                   documents: [],
-                  isSelected: false,
                   isDeleted: false,
-                  isExpanded: false
-
-
-
+                  isExpanded: false,
                 }
               ],
-              isSelected: false,
               isDeleted: false,
               isExpanded: false
-
             },
             {
               id: "",
               name: "h5",
               type: "FILE",
               documents: [],
-              isSelected: false,
               isDeleted: false,
               isExpanded: false,
-
-
-
             }
           ],
           isDeleted: false,
@@ -155,7 +158,6 @@ export class AppService {
           name: "h6",
           type: "FILE",
           documents: [],
-          isSelected: false,
           isDeleted: false,
           isExpanded: false
 
@@ -165,7 +167,6 @@ export class AppService {
       isEditing: false,
       canBeEdited: false,
       content: null,
-      isSelected: false,
       isDeleted: false,
       isExpanded: false
 
@@ -200,83 +201,127 @@ export class AppService {
 
   public createNewFile() {
 
+    if (this.appState.selectedDocument === null) {
 
-    const newFile: Document = {
-      id: generate(),
-      content: "",
-      name: "",
-      type: 'FILE',
-      isEditing: true,
-      documents: null,
-      canBeEdited: true,
-      isSelected: false,
-      status: "NEW_NOT_SAVED",
-      isDeleted: false,
-      isExpanded: false,
-    };
-    this.appState.selectedDocument?.documents.unshift(newFile);
-  }
+      this.openSnackBar("Please Select a Folder.!", "OK");
 
-  //  not in any use
-  public addFileToDashboard(fileName: string): AddFileToDashboardReturnType {
+    } else {
 
-    // Validate all the parameters
-    if (typeof fileName !== "string") // this conditions will get checked fileName === undefined || fileName === null
-      return { status: "VALIDATION_ERROR", reason: "FileName must of string type" };
+      if(this.appState.selectedDocument.type === 'FOLDER'){
 
-    if (fileName?.trim() === "")
-      return { status: "VALIDATION_ERROR", reason: "FileName cannot be blank" };
+        let index = this.appState.selectedDocument?.documents.findIndex((document:any) => document.status === 'NEW_NOT_SAVED' );
+        if(index === -1){
+          const newFile: Document = {
+            id: generate(),
+            content: "",
+            name: "",
+            type: 'FILE',
+            isEditing: true,
+            documents: null,
+            canBeEdited: true,
+            status: "NEW_NOT_SAVED",
+            isDeleted: false, 
+            isExpanded: false,
+            isSelected: false
+            
+          };
+          this.appState.selectedDocument?.documents.unshift(newFile);
+        }else{
 
-    // it it is null or undefined 
-    if (!this.appState.selectedDashboard) {
-      return { status: "DOMAIN_ERROR", reason: "No Dashboard is selected" };
+          this.openSnackBar("Please Select a Folder.!", "OK");
+        }
+
+      }else{
+        this.openSnackBar("Please Select a Folder.!", "OK");
+      }
     }
-
-
-    let index = this.appState.selectedDocument.document.findIndex((document: any) => document.status === 'NEW_NOT_SAVED');
-    console.log(index);
-
-
-    const newFile: Document = {
-      id: generate(),
-      content: "",
-      name: fileName,
-      type: DocumentType.FILE,
-      isEditing: false,
-      documents: null,
-      canBeEdited: true,
-      isSelected: false,
-      status: "SAVED",
-      isDeleted: false,
-      isExpanded: false
-    };
-
-    this.appState.selectedDocument?.documents.unshift(newFile);
-
-    return { status: "SUCCESS", reason: "" };
-
   }
+
 
   //  create folder
   public createNewFolder() {
 
-    const newFolder: Document = {
-      id: generate(),
-      content: "",
-      name: "",
-      type: 'FOLDER',
-      isEditing: true,
-      documents: [],
-      canBeEdited: true,
-      isSelected: false,
-      status: "NEW_NOT_SAVED",
-      isDeleted: false,
-      isExpanded: false,
+    if (this.appState.selectedDocument === null) {
 
-    };
+      this.openSnackBar("Please Select a Folder.!", "OK");
 
-    this.appState.selectedDocument?.documents.unshift(newFolder);
+    } else {
 
+      if(this.appState.selectedDocument.type === 'FOLDER'){
+
+        const newFolder: Document = {
+          id: generate(),
+          content: "",
+          name: "",
+          type: 'FOLDER',
+          isEditing: true,
+          documents: [],
+          canBeEdited: true,
+          status: "NEW_NOT_SAVED",
+          isDeleted: false,
+          isExpanded: false,
+          isSelected: false
+        };
+        this.appState.selectedDocument?.documents.unshift(newFolder);
+
+      }else{
+
+        this.openSnackBar("Please Select a Folder.!", "OK");
+
+      }
+
+    }
+  }
+
+
+  public deselectCurrentlySelected(): void {
+    if (this.appState.selectedDocument !== null) {
+      this.appState.selectedDocument.isSelected = false;
+      this.appState.selectedDocument = null;
+    }
+  }
+
+  public selectNew(document: any): void {
+    if (document !== null) {
+      this.appState.selectedDocument = document;
+      this.appState.selectedDocument.isSelected = true;
+    } else {
+      throw "Document cannot be null";
+    }
+  }
+
+  public saveDocument(document: any, name: string): void {
+    if (document !== null) {
+
+      document.name = name;
+      document.status = "SAVED";
+      document.isEditing = false;
+
+      // select the newly selected document
+      this.deselectCurrentlySelected();
+      this.selectNew(document);
+
+    } else {
+      throw "Document cannot be null";
+    }
+  }
+
+  public deleteEmptyDocument(document: any) {
+
+    if (document !== null) {
+      this.appState.selectedDocument.documents.splice(document,1);
+    } else {
+      throw "Document cannot be null";
+
+    }
+  }
+
+
+  //  ui function
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 3000,
+    });
   }
 
 

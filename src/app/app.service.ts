@@ -90,7 +90,7 @@ export class AppService {
         return { status: "DOMAIN_ERROR", reason: "Dashboard by this name already exists" };
     }
 
-    const defaultRootFolder = {
+    const defaultRootFolder1 = {
       id: this._guid(),
       name: "Root",
       type: "FOLDER",
@@ -103,7 +103,7 @@ export class AppService {
     // console.log(JSON.stringify(defaultRootFolder));
 
 
-    const defaultRootFolder1 = {
+    const defaultRootFolder = {
       id: this._guid(),
       name: "Root",
       type: "FOLDER",
@@ -200,6 +200,8 @@ export class AppService {
   // ---------------------------------------------------------------------------------
 
   public createNewFile() {
+        // to expand a collapsed folder if selected and trying to add a file
+        this.appState.selectedDocument.isExpanded = false;
 
     if (this.appState.selectedDocument === null) {
 
@@ -241,13 +243,18 @@ export class AppService {
   //  create folder
   public createNewFolder() {
 
+    // to expand a collapsed folder if selected and trying to add a folder
+    this.appState.selectedDocument.isExpanded = false;
+    
     if (this.appState.selectedDocument === null) {
+      
 
       this.openSnackBar("Please Select a Folder.!", "OK");
 
     } else {
 
       if(this.appState.selectedDocument.type === 'FOLDER'){
+
 
         const newFolder: Document = {
           id: generate(),
@@ -270,6 +277,15 @@ export class AppService {
 
       }
 
+    }
+  }
+
+  public doesFolderNameExist(folderName: any){
+    let index = this.appState.selectedDocument?.documents.findIndex((document:any) => document.name === folderName );
+    if(index === -1){ // not found
+      return false;
+    }else{ // found
+      return true;
     }
   }
 

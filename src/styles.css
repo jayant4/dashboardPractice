@@ -44,10 +44,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     padding : 5px;
 }
 
-.isSelected {
-    padding: 5px;
-    border: 1px solid #654062 !important;
 
+.folder-manager , .file-manager{
+    padding: 5px;
+}
+
+.isSelected {
+    border: 1px solid #654062 !important;
+    padding: 5px;
 }
 
 

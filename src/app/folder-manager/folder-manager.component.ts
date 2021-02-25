@@ -38,33 +38,68 @@ export class FolderManagerComponent implements OnInit {
   public document: any;
 
   public clickedOnDocument() {
-    this.appService.deselectCurrentlySelected();
-    this.appService.selectNew(this.document);
-    this.trigger.closeMenu();
+
+    try {
+
+      
+        
+        this.appService.deselectCurrentlySelected();
+        this.appService.selectNew(this.document);
+        this.trigger.closeMenu();
+    } catch (error) {
+
+      this.appService.openSnackBar("SOMETHING WENT WRONG", "TRY AGAIN");
+      
+    }
+    
   }
 
 
   // Ths is required to handle Enter Key and Save the folder
   public saveFolderOnKeyUp(event: any) {
 
-    if (event.keyCode === 13 || event.keyCode === 27) {
-      if (this.folderName.value.trim() === "") {
-        this.appService.deleteEmptyDocument(this.document);
-      }else{
-        this.appService.saveDocument(this.document, this.folderName.value);
+    // if(event){
+
+    //   this.appService.doesFolderNameExist(this.folderName.value);
+
+    // }else{
+
+
+
+
+    // }
+
+    try {
+      if (event.keyCode === 13 || event.keyCode === 27) {
+        if (this.folderName.value.trim() === "") {
+          this.appService.deleteEmptyDocument(this.document);
+        }else{
+          this.appService.saveDocument(this.document, this.folderName.value);
+        }
       }
+      
+    } catch (error) {
+      this.appService.openSnackBar("SOMETHING WENT WRONG", "TRY AGAIN");
     }
 
   }
 
   // Ths is required to save the folder when user hits tab to loose the focus or user clicks oustise to loose the focus
   saveFolderOnBlur() {
-    if (this.folderName.value.trim() === "") { // filename empty do not allow to save file || this.folderName.value.length < 3
-      this.appService.deleteEmptyDocument(this.document)
+    try {
 
-    } else {
-      this.appService.saveDocument(this.document, this.folderName.value);
+      if (this.folderName.value.trim() === "") { // filename empty do not allow to save file || this.folderName.value.length < 3
+        this.appService.deleteEmptyDocument(this.document)
+  
+      } else {
+        this.appService.saveDocument(this.document, this.folderName.value);
+      }
+      
+    } catch (error) {
+      this.appService.openSnackBar("SOMETHING WENT WRONG", "TRY AGAIN");
+      
     }
+    
   }
 
   public onRightClick() {

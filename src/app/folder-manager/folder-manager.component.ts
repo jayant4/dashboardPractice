@@ -40,9 +40,6 @@ export class FolderManagerComponent implements OnInit {
   public clickedOnDocument() {
 
     try {
-
-      
-        
         this.appService.deselectCurrentlySelected();
         this.appService.selectNew(this.document);
         this.trigger.closeMenu();
@@ -58,16 +55,7 @@ export class FolderManagerComponent implements OnInit {
   // Ths is required to handle Enter Key and Save the folder
   public saveFolderOnKeyUp(event: any) {
 
-    // if(event){
-
-    //   this.appService.doesFolderNameExist(this.folderName.value);
-
-    // }else{
-
-
-
-
-    // }
+    
 
     try {
       if (event.keyCode === 13 || event.keyCode === 27) {
@@ -109,6 +97,7 @@ export class FolderManagerComponent implements OnInit {
 
   public deleteFolder() {
     this.document.isDeleted = true;
+    
   }
 
   public renameFolder() {

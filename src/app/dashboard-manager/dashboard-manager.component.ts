@@ -8,20 +8,18 @@ import { AppService } from '../app.service';
 })
 export class DashboardManagerComponent implements OnInit {
 
+  public tabs : any;
   constructor(public appService: AppService) { }
 
   ngOnInit(): void {
   }
 
-  public tabs = [
-    { name : "xyz" },
-    { name : "xyz" },
-    { name : "xyz" },
-    { name : "xyz" },
-    { name : "xyz" },
-    { name : "xyz" },
-    { name : "xyz" },
-  ];
+  ngOnChanges(){
+    this.tabs = this.appService.appState.filesOpenedInTabs;
+  }
+
+
+
 
   public newDashboardName: string = "s1";
 
@@ -52,8 +50,6 @@ export class DashboardManagerComponent implements OnInit {
 
   public getDocumentContain(){
 
-
-    
     if(this.appService.appState.selectedDocument === null || this.appService.appState.selectedDocument.content === null){
       return 'function x() {\nconsole.log("Hello world!");\n}';
     }else{
@@ -65,9 +61,16 @@ export class DashboardManagerComponent implements OnInit {
 
   //-------------------------------------------------------  for monaco editor -------------------------------------------------------
   public editorOptions = {theme: "vs-dark", language: 'javascript', colorDecoration : 14};
-  // public code: string= 'function x() {\nconsole.log("Hello world!");\n}';
 
+  public code : string = ' function x() {\nconsole.log("Hello world!");\n}';
+  
  
+  public onFileTabClick(doc:any){
+    this.appService.showFileFromTabs(doc);
+  }
 
+  public deleteFileFromTabs(doc:any){ 
+    this.appService.deleteFileFromTabs(doc);
+  }
   
 }

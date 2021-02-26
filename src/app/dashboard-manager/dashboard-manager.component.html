@@ -2,9 +2,11 @@
 
     <div class="col-2 sidebar pt-3">
 
-        <input type="text" [(ngModel)]="newDashboardName" class="form-control pt-10" placeholder="Enter Dashboard Name" />
+        <input type="text" [(ngModel)]="newDashboardName" class="form-control pt-10"
+            placeholder="Enter Dashboard Name" />
 
-        <button mat-raised-button color="primary" class="btn btn-primary mt-1" (click)="addNewDashboard()">Add Dashboard</button>
+        <button mat-raised-button color="primary" class="btn btn-primary mt-1" (click)="addNewDashboard()">Add
+            Dashboard</button>
 
         <br />
         <br />
@@ -12,48 +14,54 @@
         <div *ngIf="appService.appState.selectedDashboard">
             <div class="dashboardName d-flex">
                 <p class="flex-grow-1">{{appService.appState.selectedDashboard.name}}</p>
-                <button  class="btn btn-sm" (click)="newFile()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#276678" class="bi bi-file-earmark-fill"
-                    viewBox="0 0 16 16">
-                    <path
-                        d="M4 0h5.293A1 1 0 0 1 10 .293L13.707 4a1 1 0 0 1 .293.707V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm5.5 1.5v2a1 1 0 0 0 1 1h2l-3-3z" />
-                </svg>
+                <button class="btn btn-sm" (click)="newFile()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#276678"
+                        class="bi bi-file-earmark-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M4 0h5.293A1 1 0 0 1 10 .293L13.707 4a1 1 0 0 1 .293.707V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm5.5 1.5v2a1 1 0 0 0 1 1h2l-3-3z" />
+                    </svg>
                 </button>
-            &nbsp;
-            <button class="btn btn-sm p-1" (click)="newFolder()"> 
+                &nbsp;
+                <button class="btn btn-sm p-1" (click)="newFolder()">
 
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#f0a500" class="bi bi-folder-fill" viewBox="0 0 16 16">
-                    <path d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3zm-8.322.12C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139z"/>
-                  </svg>
-            </button>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#f0a500"
+                        class="bi bi-folder-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3zm-8.322.12C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139z" />
+                    </svg>
+                </button>
 
             </div>
-            
+
         </div>
 
         <document-manager class="" [documents]="appService.appState.selectedDashboard?.documents"></document-manager>
     </div>
 
-    <div class="col-10 pt-3 ">
+    <div class="col-10 pt-3 tabBar">
 
         <div class="tabs d-flex">
-           <div class="flex-grow-1">
+            <div class="flex-grow-1">
                 <div class="openedTabs">
-                    <!-- <ng-container *ngFor="tab of tabs">
-                        <div> {{ tab.name }}</div> 
-                    </ng-container> -->
+                    <div *ngFor="let tab of appService.appState.fileTabs" (click)="onFileTabClick(tab)"
+                        class="single-tab" [ngClass]="{'isTabSelected':tab.isSelected}">
+                        <p>{{ tab.name }} </p>
+                        <i (click)="deleteFileFromTabs(tab)" class="bi bi-x-circle-fill"></i>
+                    </div>
                 </div>
-           </div>
-           <!-- <button class="btn btn-primary">Toggle theme</button> -->
+            </div>
+            <!-- <button class="btn btn-primary">Toggle theme</button> -->
         </div>
 
         <div class="editorlayout">
-            
 
-            <ngx-monaco-editor  [options]="editorOptions" [(ngModel)]='this.appService.appState.selectedDocument === null? "" : this.appService.appState.selectedDocument.content' class="editor"></ngx-monaco-editor >
-
+            <ng-container *ngIf="appService.appState.lastFileDocumentSelectedInTab !== null">
+                <ngx-monaco-editor [options]="editorOptions"
+                [(ngModel)]='appService.appState.lastFileDocumentSelectedInTab === null? "" : appService.appState.lastFileDocumentSelectedInTab.content'
+                class="editor"></ngx-monaco-editor>
+            </ng-container>
         </div>
-        
+
 
 
 

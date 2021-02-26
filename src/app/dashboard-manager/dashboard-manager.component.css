@@ -8,9 +8,46 @@
     overflow: hidden;
 }
 
+.tabBar {
+    
+}
+
 .tabs{
     height: 55px;
     padding: 5px;
-    margin: 0;
+    overflow-x: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;
 }
 
+.tabs::-webkit-scrollbar{
+    display: none;
+}
+
+
+.openedTabs{
+    display: flex;    
+    justify-content: start;
+}
+
+.single-tab{
+    margin: 2px;
+    height: 40px;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #f7f7e8;
+    width: 200px;
+
+}
+
+.single-tab {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 10px;
+    padding-left: 10px;
+    line-height: 2.3;
+}
+
+.isTabSelected { 
+    background-color: #bbdfc8;
+}

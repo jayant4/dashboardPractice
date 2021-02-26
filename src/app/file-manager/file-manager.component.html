@@ -4,7 +4,7 @@
 
     <!-- <img src="{{ getFileIconLocation() }}" alt="" /> -->
     <ng-container>
-        <img src={{getFileIcon()}} alt="" width="16" height="16" />
+        <img src={{getFileIcon()}}  onerror="this.onerror=null;this.src='http://example.com/existent-image.jpg';"  on ealt="" width="16" height="16" />
     </ng-container>
     <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#276678" class="bi bi-file-earmark-fill"
         viewBox="0 0 16 16">

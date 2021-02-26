@@ -61,10 +61,12 @@ export class AppService {
   constructor(private _snackBar: MatSnackBar) {
     this.appState = {
       selectedDocument: null,
+      fileTabs: [],
       dashboards: [],
       uiState: "",
       autoSave: false,
-      selectedDashboard: null
+      selectedDashboard: null,
+      lastFileDocumentSelectedInTab : null,
     };
   }
 
@@ -107,73 +109,139 @@ export class AppService {
       id: this._guid(),
       name: "Root",
       type: "FOLDER",
+    
       documents: [
         {
-          id: "",
-          name: "h1",
+          id: "1",
+          name: "h1.js",
           type: "FILE",
           documents: [],
           isDeleted: false,
           isEditing: false,
           isExpanded: false,
-          content : "drcgbmkugytfdcfgbh",
-          isSelected : false
+          content: "f1",
+          isSelected: false
 
         },
         {
-          id: "",
+          id: "2",
           name: "h2",
           type: 'FOLDER',
           documents: [
             {
-              id: "",
+              id: "3",
               name: "h3",
               type: "FOLDER",
               documents: [
                 {
-                  id: "",
+                  id: "4",
+                  name: "h4.js",
+                  type: "FILE",
+                  documents: [],
+                  isDeleted: false,
+                  isExpanded: false,
+                  content: "f4"
+
+                },
+                {
+                  id: "48",
+                  name: "h4.js",
+                  type: "FILE",
+                  documents: [],
+                  isDeleted: false,
+                  isExpanded: false,
+                  content: "f4"
+
+                },
+                {
+                  id: "49",
+                  name: "h4.js",
+                  type: "FILE",
+                  documents: [],
+                  isDeleted: false,
+                  isExpanded: false,
+                  content: "f4"
+
+                },
+                {
+                  id: "41",
+                  name: "h4.js",
+                  type: "FILE",
+                  documents: [],
+                  isDeleted: false,
+                  isExpanded: false,
+                  content: "f4"
+
+                },
+                {
+                  id: "42",
                   name: "h4",
                   type: "FILE",
                   documents: [],
                   isDeleted: false,
                   isExpanded: false,
-                  content : "bhcashdcbdsib uhwefui hcuiohew uuhweu hcuh uchwcu u"
+                  content: "f4"
+
+                },
+                {
+                  id: "43",
+                  name: "h4.js",
+                  type: "FILE",
+                  documents: [],
+                  isDeleted: false,
+                  isExpanded: false,
+                  content: "f4"
+
+                },
+                {
+                  id: "44",
+                  name: "h4.js",
+                  type: "FILE",
+                  documents: [],
+                  isDeleted: false,
+                  isExpanded: false,
+                  content: "f4"
 
                 }
               ],
               isDeleted: false,
-              isExpanded: false
+              isExpanded: false,
+              content: null
             },
             {
-              id: "",
-              name: "h5",
+              id: "5",
+              name: "h5.py",
               type: "FILE",
               documents: [],
               isDeleted: false,
               isExpanded: false,
-              content : "bhcashdcbdsib uhwefui hcuiohew uuhweu hcuh uchwcu u sdvsdvsdv  g ass r sre bs s erse st s"
+              content: "f5"
 
             }
           ],
           isDeleted: false,
-          isExpanded: false
+          isExpanded: false,
+          content: null
+
 
         },
         {
-          id: "",
-          name: "h6",
+          id: "6",
+          name: "h6.ts",
           type: "FILE",
           documents: [],
           isDeleted: false,
           isExpanded: false.valueOf,
-          content : "bhcashdcbdsib uhwefui hcuiohew uuhweu hcuh uchwcu u sdvsdvsdv  g ass r sre bs s erse st ssdv bsr sbstg sgs fgsfgs g shbs "
+          content: "f6"
         },
       ],
       isEditing: false,
       canBeEdited: false,
       content: null,
       isDeleted: false,
-      isExpanded: false
+      isExpanded: false,
+      
+
 
     };
 
@@ -205,8 +273,8 @@ export class AppService {
   // ---------------------------------------------------------------------------------
 
   public createNewFile() {
-        // to expand a collapsed folder if selected and trying to add a file
-        this.appState.selectedDocument.isExpanded = false;
+    // to expand a collapsed folder if selected and trying to add a file
+    this.appState.selectedDocument.isExpanded = false;
 
     if (this.appState.selectedDocument === null) {
 
@@ -214,10 +282,10 @@ export class AppService {
 
     } else {
 
-      if(this.appState.selectedDocument.type === 'FOLDER'){
+      if (this.appState.selectedDocument.type === 'FOLDER') {
 
-        let index = this.appState.selectedDocument?.documents.findIndex((document:any) => document.status === 'NEW_NOT_SAVED' );
-        if(index === -1){
+        let index = this.appState.selectedDocument?.documents.findIndex((document: any) => document.status === 'NEW_NOT_SAVED');
+        if (index === -1) {
           const newFile: Document = {
             id: generate(),
             content: "",
@@ -227,18 +295,18 @@ export class AppService {
             documents: null,
             canBeEdited: true,
             status: "NEW_NOT_SAVED",
-            isDeleted: false, 
+            isDeleted: false,
             isExpanded: false,
             isSelected: false
-            
+
           };
           this.appState.selectedDocument?.documents.unshift(newFile);
-        }else{
+        } else {
 
           this.openSnackBar("Please Select a Folder.!", "OK");
         }
 
-      }else{
+      } else {
         this.openSnackBar("Please Select a Folder.!", "OK");
       }
     }
@@ -250,15 +318,15 @@ export class AppService {
 
     // to expand a collapsed folder if selected and trying to add a folder
     this.appState.selectedDocument.isExpanded = false;
-    
+
     if (this.appState.selectedDocument === null) {
-      
+
 
       this.openSnackBar("Please Select a Folder.!", "OK");
 
     } else {
 
-      if(this.appState.selectedDocument.type === 'FOLDER'){
+      if (this.appState.selectedDocument.type === 'FOLDER') {
 
 
         const newFolder: Document = {
@@ -276,7 +344,7 @@ export class AppService {
         };
         this.appState.selectedDocument?.documents.unshift(newFolder);
 
-      }else{
+      } else {
 
         this.openSnackBar("Please Select a Folder.!", "OK");
 
@@ -285,27 +353,51 @@ export class AppService {
     }
   }
 
-  public doesFolderNameExist(folderName: any){
-    let index = this.appState.selectedDocument?.documents.findIndex((document:any) => document.name === folderName );
-    if(index === -1){ // not found
+  public doesFolderNameExist(folderName: any) {
+    let index = this.appState.selectedDocument?.documents.findIndex((document: any) => document.name === folderName);
+    if (index === -1) { // not found
       return false;
-    }else{ // found
+    } else { // found
       return true;
     }
   }
 
 
   public deselectCurrentlySelected(): void {
+
     if (this.appState.selectedDocument !== null) {
+      
+      // remember the last index of file
+      if(this.appState.selectedDocument.type === 'FILE'){
+        let index = this.findIndexOfLastSelectedFile(this.appState.fileTabs);
+        // add this index to the file
+        console.log(index);
+        
+        this.appState.indexOfLastOpenedFile = index;
+      }
       this.appState.selectedDocument.isSelected = false;
       this.appState.selectedDocument = null;
     }
   }
 
+
+  public findIndexOfLastSelectedFile (tabArray: any){
+    return tabArray.findIndex((file:any) => file.isSelected === true);
+  
+    
+  }
+
   public selectNew(document: any): void {
     if (document !== null) {
-      this.appState.selectedDocument = document;
-      this.appState.selectedDocument.isSelected = true;
+      if(document.type === 'FOLDER'){
+
+        this.appState.selectedDocument = document;
+        this.appState.selectedDocument.isSelected = true;
+      }else if(document.type === 'FILE'){
+        this.appState.selectedDocument = document;
+        this.appState.selectedDocument.isSelected = true;
+        this.appState.lastFileDocumentSelectedInTab = document;
+      }
     } else {
       throw "Document cannot be null";
     }
@@ -330,11 +422,34 @@ export class AppService {
   public deleteEmptyDocument(document: any) {
 
     if (document !== null) {
-      this.appState.selectedDocument.documents.splice(document,1);
+      this.appState.selectedDocument.documents.splice(document, 1);
     } else {
       throw "Document cannot be null";
-
     }
+  }
+
+  public addFileToTabs(document: any) {
+    let index = this.appState.fileTabs.findIndex((doc: any) => doc.id === document.id);
+    if (index === -1) {
+      this.appState.fileTabs.push(document);
+    } 
+  }
+
+  public deleteFileFromTabs(document: any) {
+    let index = this.appState.fileTabs.findIndex((doc: any) => doc.id === document.id);
+
+    this.appState.fileTabs.splice(index, 1);
+    this.deselectCurrentlySelected();
+    this.showFileFromTabs(this.appState.fileTabs.length != 0 ? this.appState.fileTabs[0] : null);
+  }
+
+  public showFileFromTabs(document: any) {
+
+    if(document.type === "FILE"){
+      this.deselectCurrentlySelected();
+      this.selectNew(document);
+    }
+
   }
 
 

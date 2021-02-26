@@ -2,6 +2,9 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { AppService } from '../app.service';
+// import {fs} from "fs"
+
+
 
 @Component({
   selector: 'file-manager',
@@ -51,22 +54,16 @@ public saveFileOnKeyUp(event: any) {
 
 }
 
-
-
   saveFileBlur() {
-
     try {
       if (this.fileName.value.trim() === "") { // filename empty do not allow to save file || this.fileName.value.length < 3
         this.appService.deleteEmptyDocument(this.document)
-  
       } else {
         this.appService.saveDocument(this.document, this.fileName.value);
       }
     } catch (error) {
       this.appService.openSnackBar("SOMETHING WENT WRONG", "TRY AGAIN");
-
     }
-    
   }
 
   public onRightClick() {
@@ -80,14 +77,13 @@ public saveFileOnKeyUp(event: any) {
     this.appService.deselectCurrentlySelected();
     this.appService.selectNew(this.document);
     //  remove previous file isSelected status
-
-    console.log(this.appService.appState.selectedDocument.content);
-    
+      this.addFileToTabs(this.document);
   }
 
 
 
   getFileExtension(){
+
    let fileExtension =  this.document.name.substring(this.document.name.lastIndexOf('.')+ 1); 
    return fileExtension;
   }
@@ -100,9 +96,33 @@ public saveFileOnKeyUp(event: any) {
 
   deleteFile() { // delete file meant to soft delete file from the datamodel
     this.document.isDeleted = true;
+
+    //  when deleteing from document then remove it also from the tabs array 
+
+    // collect id form document
+    let documentId = this.document.id;
+    let index = this.appService.appState.fileTabs.findIndex((file:any) => file.id === documentId);
+    if(index !== -1){ // file found
+      this.appService.appState.fileTabs.splice(index, 1);
+    }
+
   }
 
   renameFile() {
     this.document.isEditing = true;
   }
+
+  addFileToTabs(document : any){    
+    this.appService.addFileToTabs(document);
+  }
+
+
+  public deleteFileFromTabs(document:any){
+    this.appService.deleteFileFromTabs(document);
+  }
+
+  public showFileFromTabs(document:any){
+    this.appService.showFileFromTabs(document);
+  }
+
 }

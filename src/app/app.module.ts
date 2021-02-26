@@ -10,8 +10,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FileManagerComponent } from './file-manager/file-manager.component';
 import { FolderManagerComponent } from './folder-manager/folder-manager.component';
 
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatButtonModule} from '@angular/material/button';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button';
+import { MonacoEditorModule } from 'ngx-monaco-editor';
 
 
 @NgModule({
@@ -31,10 +32,12 @@ import {MatButtonModule} from '@angular/material/button';
     BrowserAnimationsModule,
     MatMenuModule,
     MatSnackBarModule,
-    MatButtonModule
-   
+    MatButtonModule,
+    MonacoEditorModule.forRoot()
+
 
   ],
+  
   providers: [],
   bootstrap: [AppComponent]
 })

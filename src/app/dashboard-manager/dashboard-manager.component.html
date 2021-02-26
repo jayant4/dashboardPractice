@@ -34,7 +34,28 @@
         <document-manager class="" [documents]="appService.appState.selectedDashboard?.documents"></document-manager>
     </div>
 
-    <div class="col-9 codeEditor">
+    <div class="col-10 pt-3 ">
+
+        <div class="tabs d-flex">
+           <div class="flex-grow-1">
+                <div class="openedTabs">
+                    <!-- <ng-container *ngFor="tab of tabs">
+                        <div> {{ tab.name }}</div> 
+                    </ng-container> -->
+                </div>
+           </div>
+           <!-- <button class="btn btn-primary">Toggle theme</button> -->
+        </div>
+
+        <div class="editorlayout">
+            
+
+            <ngx-monaco-editor  [options]="editorOptions" [(ngModel)]='this.appService.appState.selectedDocument === null? "" : this.appService.appState.selectedDocument.content' class="editor"></ngx-monaco-editor >
+
+        </div>
+        
+
+
 
     </div>
 

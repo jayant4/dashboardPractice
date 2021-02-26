@@ -115,7 +115,9 @@ export class AppService {
           documents: [],
           isDeleted: false,
           isEditing: false,
-          isExpanded: false
+          isExpanded: false,
+          content : "drcgbmkugytfdcfgbh",
+          isSelected : false
 
         },
         {
@@ -135,6 +137,8 @@ export class AppService {
                   documents: [],
                   isDeleted: false,
                   isExpanded: false,
+                  content : "bhcashdcbdsib uhwefui hcuiohew uuhweu hcuh uchwcu u"
+
                 }
               ],
               isDeleted: false,
@@ -147,6 +151,8 @@ export class AppService {
               documents: [],
               isDeleted: false,
               isExpanded: false,
+              content : "bhcashdcbdsib uhwefui hcuiohew uuhweu hcuh uchwcu u sdvsdvsdv  g ass r sre bs s erse st s"
+
             }
           ],
           isDeleted: false,
@@ -159,9 +165,8 @@ export class AppService {
           type: "FILE",
           documents: [],
           isDeleted: false,
-          isExpanded: false
-
-
+          isExpanded: false.valueOf,
+          content : "bhcashdcbdsib uhwefui hcuiohew uuhweu hcuh uchwcu u sdvsdvsdv  g ass r sre bs s erse st ssdv bsr sbstg sgs fgsfgs g shbs "
         },
       ],
       isEditing: false,
@@ -258,7 +263,7 @@ export class AppService {
 
         const newFolder: Document = {
           id: generate(),
-          content: "",
+          content: "h",
           name: "",
           type: 'FOLDER',
           isEditing: true,

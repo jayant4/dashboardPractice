@@ -13,7 +13,19 @@ export class DashboardManagerComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public tabs = [
+    { name : "xyz" },
+    { name : "xyz" },
+    { name : "xyz" },
+    { name : "xyz" },
+    { name : "xyz" },
+    { name : "xyz" },
+    { name : "xyz" },
+  ];
+
   public newDashboardName: string = "s1";
+
+  public toggleTheme: boolean = true;
 
   public addNewDashboard() {
     const result = this.appService.createNewDashboard(this.newDashboardName);
@@ -38,4 +50,24 @@ export class DashboardManagerComponent implements OnInit {
 
   }
 
+  public getDocumentContain(){
+
+
+    
+    if(this.appService.appState.selectedDocument === null || this.appService.appState.selectedDocument.content === null){
+      return 'function x() {\nconsole.log("Hello world!");\n}';
+    }else{
+      console.log(this.appService.appState.selectedDocument.content , "csd");
+      
+      return this.appService.appState.selectedDocument.content;
+    }
+  }
+
+  //-------------------------------------------------------  for monaco editor -------------------------------------------------------
+  public editorOptions = {theme: "vs-dark", language: 'javascript', colorDecoration : 14};
+  // public code: string= 'function x() {\nconsole.log("Hello world!");\n}';
+
+ 
+
+  
 }

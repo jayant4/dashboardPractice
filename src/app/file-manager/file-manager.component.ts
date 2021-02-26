@@ -81,6 +81,8 @@ public saveFileOnKeyUp(event: any) {
     this.appService.selectNew(this.document);
     //  remove previous file isSelected status
 
+    console.log(this.appService.appState.selectedDocument.content);
+    
   }
 
 
@@ -103,5 +105,4 @@ public saveFileOnKeyUp(event: any) {
   renameFile() {
     this.document.isEditing = true;
   }
-
 }

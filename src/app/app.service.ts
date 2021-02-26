@@ -66,7 +66,7 @@ export class AppService {
       uiState: "",
       autoSave: false,
       selectedDashboard: null,
-      lastFileDocumentSelectedInTab : null,
+      lastFileDocumentSelectedInTab: null,
     };
   }
 
@@ -109,7 +109,7 @@ export class AppService {
       id: this._guid(),
       name: "Root",
       type: "FOLDER",
-    
+
       documents: [
         {
           id: "1",
@@ -240,7 +240,7 @@ export class AppService {
       content: null,
       isDeleted: false,
       isExpanded: false,
-      
+
 
 
     };
@@ -366,13 +366,13 @@ export class AppService {
   public deselectCurrentlySelected(): void {
 
     if (this.appState.selectedDocument !== null) {
-      
+
       // remember the last index of file
-      if(this.appState.selectedDocument.type === 'FILE'){
+      if (this.appState.selectedDocument.type === 'FILE') {
         let index = this.findIndexOfLastSelectedFile(this.appState.fileTabs);
         // add this index to the file
         console.log(index);
-        
+
         this.appState.indexOfLastOpenedFile = index;
       }
       this.appState.selectedDocument.isSelected = false;
@@ -381,19 +381,19 @@ export class AppService {
   }
 
 
-  public findIndexOfLastSelectedFile (tabArray: any){
-    return tabArray.findIndex((file:any) => file.isSelected === true);
-  
-    
+  public findIndexOfLastSelectedFile(tabArray: any) {
+    return tabArray.findIndex((file: any) => file.isSelected === true);
+
+
   }
 
   public selectNew(document: any): void {
     if (document !== null) {
-      if(document.type === 'FOLDER'){
+      if (document.type === 'FOLDER') {
 
         this.appState.selectedDocument = document;
         this.appState.selectedDocument.isSelected = true;
-      }else if(document.type === 'FILE'){
+      } else if (document.type === 'FILE') {
         this.appState.selectedDocument = document;
         this.appState.selectedDocument.isSelected = true;
         this.appState.lastFileDocumentSelectedInTab = document;
@@ -432,20 +432,40 @@ export class AppService {
     let index = this.appState.fileTabs.findIndex((doc: any) => doc.id === document.id);
     if (index === -1) {
       this.appState.fileTabs.push(document);
-    } 
+    }
   }
 
   public deleteFileFromTabs(document: any) {
     let index = this.appState.fileTabs.findIndex((doc: any) => doc.id === document.id);
 
+
     this.appState.fileTabs.splice(index, 1);
     this.deselectCurrentlySelected();
-    this.showFileFromTabs(this.appState.fileTabs.length != 0 ? this.appState.fileTabs[0] : null);
+
+    if (this.appState.fileTabs.length > index + 1) {
+      this.showFileFromTabs(this.appState.fileTabs[index]);
+
+    } else {
+      if (this.appState.fileTabs.length === 0) {
+        
+        this.appState.lastFileDocumentSelectedInTab = null;
+
+      } else {
+
+        this.showFileFromTabs(this.appState.fileTabs[index - 1]);
+        
+      }
+    }
+
+
+    // this.showFileFromTabs(this.appState.fileTabs.length != 0 ? this.appState.fileTabs[0] : null);
+    // this.showFileFromTabs(this.appState.fileTabs.length != 0 ? this.appState.fileTabs.length > 1 : null);
+
   }
 
   public showFileFromTabs(document: any) {
 
-    if(document.type === "FILE"){
+    if (document.type === "FILE") {
       this.deselectCurrentlySelected();
       this.selectNew(document);
     }

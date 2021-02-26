@@ -13,8 +13,6 @@
 }
 
 .tabs{
-    height: 55px;
-    padding: 5px;
     overflow-x: scroll;
     -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;

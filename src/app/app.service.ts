@@ -71,7 +71,7 @@ export class AppService {
   }
 
   private _guid() {
-    return generate(); // TODO: replace with actual code
+    return generate(); 
   }
 
   // User Activities Functionality
@@ -175,7 +175,7 @@ export class AppService {
                 },
                 {
                   id: "42",
-                  name: "h4",
+                  name: "h4.py",
                   type: "FILE",
                   documents: [],
                   isDeleted: false,
@@ -231,7 +231,7 @@ export class AppService {
           type: "FILE",
           documents: [],
           isDeleted: false,
-          isExpanded: false.valueOf,
+          isExpanded: false,
           content: "f6"
         },
       ],
@@ -436,26 +436,79 @@ export class AppService {
   }
 
   public deleteFileFromTabs(document: any) {
-    let index = this.appState.fileTabs.findIndex((doc: any) => doc.id === document.id);
+
+    let indexOfFileToDeleted = this.appState.fileTabs.findIndex((doc: any) => doc.id === document.id);
+
+    console.log(indexOfFileToDeleted,"del");
+    
+
+    let indexOfNextFileToBeSelected: number | null = null;
 
 
-    this.appState.fileTabs.splice(index, 1);
-    this.deselectCurrentlySelected();
+    // //if its a last file and there are only 2 files
+    // if (this.appState.fileTabs.length - 1 === indexOfNextFileToBeSelected && this.appState.fileTabs.length === 2) {
+    //   // selecting the left file
+    //   indexOfNextFileToBeSelected = indexOfFileToDeleted - 1;
+    // } else if (this.appState.fileTabs.length - 1 === indexOfNextFileToBeSelected && this.appState.fileTabs.length === 1) { // there is only 1 file left and its the last file
 
-    if (this.appState.fileTabs.length > index + 1) {
-      this.showFileFromTabs(this.appState.fileTabs[index]);
+    //   // no files as selected and 
+    //   indexOfNextFileToBeSelected = -1
+
+    // }
+    // else if (this.appState.fileTabs.length - 1 === indexOfNextFileToBeSelected && this.appState.fileTabs.length > 2) { // there is only 1 file left and its the last file
+
+    //   // to show the last file
+    //   indexOfNextFileToBeSelected = this.appState.fileTabs.length - 1
+
+    // }
+
+    // # TODO DELETE AND SHO A FILE FROM TABS
+
+    if (indexOfFileToDeleted < this.appState.fileTabs.length) { // files are present on the right side of the file to be deleted , ASSIGN RIGHT FILE
+      indexOfNextFileToBeSelected = indexOfFileToDeleted + 1
+
+    } else if (indexOfFileToDeleted === this.appState.fileTabs.length) { // last file is deleted , there are no files on the right side
+
+      if (this.appState.fileTabs.length === 1) {  // this is the last file to be deleted , assign null
+
+        indexOfNextFileToBeSelected = null
+
+      }
+
+      indexOfNextFileToBeSelected = indexOfFileToDeleted - 1;
+
+
+
+
+    }
+
+
+    if (this.appState.fileTabs.length > indexOfFileToDeleted + 1) {
+      indexOfNextFileToBeSelected = this.appState.fileTabs[indexOfFileToDeleted];
+      console.log(indexOfNextFileToBeSelected);
+
+
+
 
     } else {
       if (this.appState.fileTabs.length === 0) {
-        
+
         this.appState.lastFileDocumentSelectedInTab = null;
 
       } else {
 
-        this.showFileFromTabs(this.appState.fileTabs[index - 1]);
-        
+        indexOfNextFileToBeSelected = this.appState.fileTabs[indexOfFileToDeleted - 1];
+        console.log(indexOfNextFileToBeSelected);
+
+
       }
     }
+
+
+    this.appState.fileTabs.splice(indexOfFileToDeleted, 1);
+    this.deselectCurrentlySelected();
+
+    this.showFileFromTabs(indexOfNextFileToBeSelected);
 
 
     // this.showFileFromTabs(this.appState.fileTabs.length != 0 ? this.appState.fileTabs[0] : null);
